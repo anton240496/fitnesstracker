@@ -45,7 +45,9 @@ class Main extends JFrame {
     private JButton start1 = new JButton("Старт скакалка");
     private JButton start2 = new JButton("Старт приседание");
     private JButton stop = new JButton("Стоп");
-    private JLabel label = new JLabel("");
+    private JLabel labelo = new JLabel("");
+    private JLabel labels = new JLabel("");
+    private JLabel labelp = new JLabel("");
     private JLabel label1 = new JLabel("таймер отжимание; ");
     private JLabel label2 = new JLabel("таймер скакалка; ");
     private JLabel label3 = new JLabel("таймер приседание; ");
@@ -116,7 +118,9 @@ class Main extends JFrame {
         panel1.add(BorderLayout.CENTER, scrollPaneInput);
         panel1.setBorder(new CompoundBorder(new EmptyBorder(5, 5, 5, 5), new TitledBorder("процесс")));
         panel1.setPreferredSize(new Dimension(200, 200));
-        panel1.add(label);
+        panel1.add(labelo);
+        panel1.add(labels);
+        panel1.add(labelp);
         panel1.add(label1);
         panel1.add(label2);
         panel1.add(label3);
@@ -150,7 +154,8 @@ class Main extends JFrame {
             // старт таймера с повторением
             timer.start();
             timer.setRepeats(true);
-            cal++;
+            timer1.stop();
+            timer2.stop();
 
 
         }
@@ -165,7 +170,9 @@ class Main extends JFrame {
             // старт таймера с повторением
             timer1.start();
             timer1.setRepeats(true);
-            cal1++;
+            timer.stop();
+            timer2.stop();
+
 
 
         }
@@ -181,7 +188,9 @@ class Main extends JFrame {
             timer2.start();
 
             timer2.setRepeats(true);
-            cal2++;
+            timer1.stop();
+            timer.stop();
+
 
 
         }
@@ -198,12 +207,15 @@ class Main extends JFrame {
         // время пошло , отжимание
         @Override
         public void actionPerformed(ActionEvent ts) {
+
+
             K = 30;
-            k = K / 3600;
+            k = K;
             counter++;
+            cal++;
             cal = counter * k;
             if (counter > 0) {
-                label.setText("время: " + counter +  "калорий в час=" + cal);
+                labelo.setText("время: " + counter +  "калорий в час=" + cal);
             } else {
                 // счет срабатываний секундомера
                 input.setText("Цикл секундомера N " + ++timerCount);
@@ -224,13 +236,14 @@ class Main extends JFrame {
         }
         @Override
         public void actionPerformed(ActionEvent ts1) {
-            timer.stop();
+
             K = 100;
-            k = K / 3600;
+            k = K ;
            counter1++;
+           cal1++;
             cal1 = counter1 * k;
             if (counter1 > 0) {
-                label.setText("время: " + counter1 + "калорий в час=" + cal1);
+                labels.setText("время: " + counter1 + "калорий в час=" + cal1);
             } else {
                 // счет срабатываний секундомера
                 input.setText("Цикл секундомера N " + ++timerCount);
@@ -255,15 +268,16 @@ class Main extends JFrame {
         // время пошло , не работает все время срабатывает следующий класс
         @Override
         public void actionPerformed(ActionEvent ts) {
-            timer1.stop();
-            timer.stop();
+
+
             K = 200;
-            k = K / 3600;
+            k = K ;
           counter2++;
+          cal2++;
             cal2 = counter2 * k;
             if (counter2 >= -1) {
 
-                label.setText("время: " + counter2 +  "калорий в час=" + cal2);
+                labelp.setText("время: " + counter2 +  "калорий в час=" + cal2);
             } else {
                 // счет срабатываний секундомера
                 input.setText("Цикл секундомера N " + ++timerCount);
@@ -274,6 +288,7 @@ class Main extends JFrame {
 
             }
         }
+
     }
 
     // клас имплементации события нажатия стоп
@@ -284,7 +299,9 @@ class Main extends JFrame {
         public void actionPerformed(ActionEvent e) {
 
             float calsymm;
-
+timer.stop();
+timer1.stop();
+timer2.stop();
 
 
 
