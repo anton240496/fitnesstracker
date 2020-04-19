@@ -298,10 +298,14 @@ class Main extends JFrame {
         // обработка события нажатия на button start
         public void actionPerformed(ActionEvent e) {
 
-            float calsymm;
-timer.stop();
-timer1.stop();
-timer2.stop();
+            float calsymm, countersymm;
+            timer.stop();
+            timer1.stop();
+            timer2.stop();
+            calsymm = cal + cal2 +cal1;
+            countersymm = counter1+counter2+counter;
+
+
 
 
 
@@ -311,11 +315,15 @@ timer2.stop();
 
 
 
+
     label2.setText(" время на отжимание: " + counter1 + "калорий в час=" + cal1);
 
 
 
-    label3.setText(" время на отжимание: " + counter2 + "калорий в час=" + cal2);
+            label3.setText(" время на отжимание: " + counter2 + "калорий в час=" + cal2);
+
+            label4.setText(" время на отжимание: " + countersymm + "калорий в час=" + calsymm);
+
 
    input.setText("секундомер остановлен");
 
