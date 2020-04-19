@@ -23,6 +23,8 @@ import javax.swing.border.TitledBorder;
 class Main extends JFrame {
 
     private int counter;
+    private int counter1;
+    private int counter2;
     // счетчик срабатываний секундомера
     private int timerCount;
     // период срабатывания секундомером мс для всех упражненй
@@ -43,8 +45,11 @@ class Main extends JFrame {
     private JButton start1 = new JButton("Старт скакалка");
     private JButton start2 = new JButton("Старт приседание");
     private JButton stop = new JButton("Стоп");
-    private JLabel label1 = new JLabel("label1");
-    private JLabel label3 = new JLabel("label3");
+    private JLabel label = new JLabel("");
+    private JLabel label1 = new JLabel("таймер отжимание; ");
+    private JLabel label2 = new JLabel("таймер скакалка; ");
+    private JLabel label3 = new JLabel("таймер приседание; ");
+    private JLabel label4 = new JLabel("общий затрат;");
 
     private Timer timer;
     private Timer timer1;
@@ -74,6 +79,7 @@ class Main extends JFrame {
         // период одного импульса счета в мс
 
         timer2 = new Timer(timerStep, tc2);
+
 
 
 
@@ -110,8 +116,11 @@ class Main extends JFrame {
         panel1.add(BorderLayout.CENTER, scrollPaneInput);
         panel1.setBorder(new CompoundBorder(new EmptyBorder(5, 5, 5, 5), new TitledBorder("процесс")));
         panel1.setPreferredSize(new Dimension(200, 200));
+        panel1.add(label);
         panel1.add(label1);
+        panel1.add(label2);
         panel1.add(label3);
+        panel1.add(label4);
 
         // панель 2
         panel2.setBorder(new CompoundBorder(new EmptyBorder(5, 5, 5, 5), new TitledBorder("вид тренровки")));
@@ -141,12 +150,13 @@ class Main extends JFrame {
             // старт таймера с повторением
             timer.start();
             timer.setRepeats(true);
+            cal++;
 
 
         }
     }
 
-    class startEventListener1 implements ActionListener {
+     class startEventListener1 implements ActionListener {
 
         @Override
         // обработка события нажатия на button start скакалка
@@ -155,6 +165,7 @@ class Main extends JFrame {
             // старт таймера с повторением
             timer1.start();
             timer1.setRepeats(true);
+            cal1++;
 
 
         }
@@ -168,7 +179,9 @@ class Main extends JFrame {
             input.setText("приседание");
             // старт секундомера с повторением
             timer2.start();
+
             timer2.setRepeats(true);
+            cal2++;
 
 
         }
@@ -187,21 +200,10 @@ class Main extends JFrame {
         public void actionPerformed(ActionEvent ts) {
             K = 30;
             k = K / 3600;
-
-
-            K++;
-
-            cal++;
-
-
             counter++;
             cal = counter * k;
             if (counter > 0) {
-
-
-                label1.setText("время: " + counter +  "калорий в час=" + cal);
-
-
+                label.setText("время: " + counter +  "калорий в час=" + cal);
             } else {
                 // счет срабатываний секундомера
                 input.setText("Цикл секундомера N " + ++timerCount);
@@ -218,34 +220,24 @@ class Main extends JFrame {
     public class TimeClass1 implements ActionListener {
         // время пошло , скакалка
         public TimeClass1(int count) {
-            counter = count;
+            counter1 = count;
         }
         @Override
         public void actionPerformed(ActionEvent ts1) {
+            timer.stop();
             K = 100;
             k = K / 3600;
-
-
-
-
-            cal1++;
-
-
-           counter++;
-            cal1 = counter * k;
-            if (counter > 0) {
-
-
-                label1.setText("время: " + counter + "калорий в час=" + cal1);
-
-
+           counter1++;
+            cal1 = counter1 * k;
+            if (counter1 > 0) {
+                label.setText("время: " + counter1 + "калорий в час=" + cal1);
             } else {
                 // счет срабатываний секундомера
                 input.setText("Цикл секундомера N " + ++timerCount);
                 // звук beep
                 Toolkit.getDefaultToolkit().beep();
                 // перезагрузка счетчика времени
-                counter = timerDel1;
+                counter1 = timerDel1;
 
             }
         }
@@ -257,35 +249,28 @@ class Main extends JFrame {
 
         // конструктор
         public TimeClass2(int count) {
-            counter = count;
+            counter2 = count;
         }
 
         // время пошло , не работает все время срабатывает следующий класс
         @Override
         public void actionPerformed(ActionEvent ts) {
+            timer1.stop();
+            timer.stop();
             K = 200;
             k = K / 3600;
+          counter2++;
+            cal2 = counter2 * k;
+            if (counter2 >= -1) {
 
-
-
-
-            cal2++;
-
-
-          counter++;
-            cal2 = counter * k;
-            if (counter >= -1) {
-
-             //   cal = counter* K;
-                label1.setText("время: " + counter +  "калорий в час=" + cal2);
-
+                label.setText("время: " + counter2 +  "калорий в час=" + cal2);
             } else {
                 // счет срабатываний секундомера
                 input.setText("Цикл секундомера N " + ++timerCount);
                 // звук beep
                 Toolkit.getDefaultToolkit().beep();
                 // перезагрузка счетчика времени
-                counter = timerDel2;
+                counter2 = timerDel2;
 
             }
         }
@@ -297,30 +282,34 @@ class Main extends JFrame {
         @Override
         // обработка события нажатия на button start
         public void actionPerformed(ActionEvent e) {
+
             float calsymm;
-           calsymm =  cal +cal1 + cal2;
-            //остановка секундомера
-            //counter++;
-
-            timer.stop();
-            timer1.stop();
-            timer2.stop();
 
 
-            label1.setText("секундомер остановлен, время: " + counter + "калорий в час=" + calsymm);
-            calsymm++;
-
-//            label3.setText("время: " + counter + "калорий в час=" + cal);
-            //label1.setText("df");
-          //  counter++;
-          //  cal++;
 
 
-            input.setText("секундомер остановлен");
 
-             counter = 0;
+
+          label1.setText(" время на отжимание: " + counter + "калорий в час=" + cal);
+
+
+
+    label2.setText(" время на отжимание: " + counter1 + "калорий в час=" + cal1);
+
+
+
+    label3.setText(" время на отжимание: " + counter2 + "калорий в час=" + cal2);
+
+   input.setText("секундомер остановлен");
+
            timerCount = 0;
+
+
+
         }
+
+
+
     }
 
 
