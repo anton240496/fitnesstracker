@@ -22,9 +22,7 @@ import javax.swing.border.TitledBorder;
 
 class Main extends JFrame {
 
-    private int counter;
-    private int counter1;
-    private int counter2;
+    private int counter, countero, counter1, counters, counter2, counterp;
     // счетчик срабатываний секундомера
     private int timerCount;
     // период срабатывания секундомером мс для всех упражненй
@@ -32,7 +30,7 @@ class Main extends JFrame {
     private int timerDel1 = 0;
     private int timerDel2 = 0;
     private float K;//калорие в час
-    private float cal, cal1, cal2;//подсчет калорий
+    private float cal, calo, cal1, cals, cal2, calp;//подсчет калорий
     private float k; // в секунду
 //----------------------------------------------------------------------
 // создание объектов
@@ -126,6 +124,7 @@ class Main extends JFrame {
         panel1.add(label3);
         panel1.add(label4);
 
+
         // панель 2
         panel2.setBorder(new CompoundBorder(new EmptyBorder(5, 5, 5, 5), new TitledBorder("вид тренровки")));
         panel2.setPreferredSize(new Dimension(200, 200));
@@ -156,6 +155,9 @@ class Main extends JFrame {
             timer.setRepeats(true);
             timer1.stop();
             timer2.stop();
+
+
+
 
 
         }
@@ -211,19 +213,14 @@ class Main extends JFrame {
 
             K = 30;
             k = K;
+            countero++;
             counter++;
+            calo++;
             cal++;
             cal = counter * k;
-            if (counter > 0) {
-                labelo.setText("время: " + counter +  "калорий в час=" + cal);
-            } else {
-                // счет срабатываний секундомера
-                input.setText("Цикл секундомера N " + ++timerCount);
-                // звук beep
-                Toolkit.getDefaultToolkit().beep();
-                // перезагрузка счетчика времени
-                counter = timerDel;
-
+            calo=countero*k;
+            if (countero > 0) {
+                labelo.setText("время: " + countero +  "калорий в час=" + calo);
             }
         }
     }
@@ -239,19 +236,14 @@ class Main extends JFrame {
 
             K = 100;
             k = K ;
+            counters++;
            counter1++;
            cal1++;
+           cals++;
             cal1 = counter1 * k;
-            if (counter1 > 0) {
-                labels.setText("время: " + counter1 + "калорий в час=" + cal1);
-            } else {
-                // счет срабатываний секундомера
-                input.setText("Цикл секундомера N " + ++timerCount);
-                // звук beep
-                Toolkit.getDefaultToolkit().beep();
-                // перезагрузка счетчика времени
-                counter1 = timerDel1;
-
+            cals=counters*k;
+            if (counters > 0) {
+                labels.setText("время: " + counters + "калорий в час=" + cals);
             }
         }
 
@@ -273,19 +265,14 @@ class Main extends JFrame {
             K = 200;
             k = K ;
           counter2++;
+          counterp++;
           cal2++;
+          calp++;
             cal2 = counter2 * k;
-            if (counter2 >= -1) {
+            calp = counterp * k;
+            if (counterp >= -1) {
 
-                labelp.setText("время: " + counter2 +  "калорий в час=" + cal2);
-            } else {
-                // счет срабатываний секундомера
-                input.setText("Цикл секундомера N " + ++timerCount);
-                // звук beep
-                Toolkit.getDefaultToolkit().beep();
-                // перезагрузка счетчика времени
-                counter2 = timerDel2;
-
+                labelp.setText("время: " + counterp +  "калорий в час=" + calp);
             }
         }
 
@@ -299,6 +286,8 @@ class Main extends JFrame {
         public void actionPerformed(ActionEvent e) {
 
             float calsymm, countersymm;
+
+
             timer.stop();
             timer1.stop();
             timer2.stop();
@@ -316,18 +305,24 @@ class Main extends JFrame {
 
 
 
-    label2.setText(" время на отжимание: " + counter1 + "калорий в час=" + cal1);
+    label2.setText(" время на скакалку: " + counter1 + "калорий в час=" + cal1);
 
 
 
-            label3.setText(" время на отжимание: " + counter2 + "калорий в час=" + cal2);
+            label3.setText(" время на приседание: " + counter2 + "калорий в час=" + cal2);
 
-            label4.setText(" время на отжимание: " + countersymm + "калорий в час=" + calsymm);
+            label4.setText(" общее время: " + countersymm + "калорий в час=" + calsymm);
 
 
    input.setText("секундомер остановлен");
 
            timerCount = 0;
+           calo=0;
+           cals=0;
+           calp=0;
+           countero=0;
+           counters=0;
+           counterp=0;
 
 
 
