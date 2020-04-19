@@ -74,7 +74,7 @@ class Main extends JFrame {
 
         timer1 = new Timer(timerStep, tc1);
 
-      TimeClass2 tc2 = new TimeClass2(timerDel2);
+        TimeClass2 tc2 = new TimeClass2(timerDel2);
         // объект секундомера
         // период одного импульса счета в мс
 
@@ -105,7 +105,7 @@ class Main extends JFrame {
         // зарегистрировать экземпляр класса обработчика события start
         start.addActionListener(new startEventListener());
         start1.addActionListener(new startEventListener1());
-       start2.addActionListener(new startEventListener2());
+        start2.addActionListener(new startEventListener2());
 
         // кнопка стоп
         stop.setPreferredSize(new Dimension(100, 20));
@@ -163,7 +163,7 @@ class Main extends JFrame {
         }
     }
 
-     class startEventListener1 implements ActionListener {
+    class startEventListener1 implements ActionListener {
 
         @Override
         // обработка события нажатия на button start скакалка
@@ -237,9 +237,9 @@ class Main extends JFrame {
             K = 100;
             k = K ;
             counters++;
-           counter1++;
-           cal1++;
-           cals++;
+            counter1++;
+            cal1++;
+            cals++;
             cal1 = counter1 * k;
             cals=counters*k;
             if (counters > 0) {
@@ -264,10 +264,10 @@ class Main extends JFrame {
 
             K = 200;
             k = K ;
-          counter2++;
-          counterp++;
-          cal2++;
-          calp++;
+            counter2++;
+            counterp++;
+            cal2++;
+            calp++;
             cal2 = counter2 * k;
             calp = counterp * k;
             if (counterp >= -1) {
@@ -300,12 +300,12 @@ class Main extends JFrame {
 
 
 
-          label1.setText(" время на отжимание: " + counter + "калорий в час=" + cal);
+            label1.setText(" время на отжимание: " + counter + "калорий в час=" + cal);
 
 
 
 
-    label2.setText(" время на скакалку: " + counter1 + "калорий в час=" + cal1);
+            label2.setText(" время на скакалку: " + counter1 + "калорий в час=" + cal1);
 
 
 
@@ -314,15 +314,15 @@ class Main extends JFrame {
             label4.setText(" общее время: " + countersymm + "калорий в час=" + calsymm);
 
 
-   input.setText("секундомер остановлен");
+            input.setText("секундомер остановлен");
 
-           timerCount = 0;
-           calo=0;
-           cals=0;
-           calp=0;
-           countero=0;
-           counters=0;
-           counterp=0;
+            timerCount = 0;
+            calo=0;
+            cals=0;
+            calp=0;
+            countero=0;
+            counters=0;
+            counterp=0;
 
 
 
