@@ -24,7 +24,7 @@ class Main extends JFrame {
     private int counter, countero, counter1, counters, counter2, counterp; // время на разные виды трененеровок
     // счетчик срабатываний секундомера
     private int timerCount;
-    // период срабатывания секундомером мс для всех упражненй
+    // период срабатывания секундомером  для всех упражненй
     private int timerDel = 0;
     private int timerDel1 = 0;
     private int timerDel2 = 0;
@@ -50,7 +50,7 @@ class Main extends JFrame {
     private JLabel label2 = new JLabel("");
     private JLabel label3 = new JLabel("");
     private JLabel label4 = new JLabel("");
-    private DecimalFormat df = new DecimalFormat("#####.##"); // округление калориц до сотых
+    private DecimalFormat df = new DecimalFormat("#####.##"); // округление калорий до сотых
 
     private Timer timer;
     private Timer timer1;// секундомеры для трех кнопок
@@ -71,8 +71,6 @@ class Main extends JFrame {
 
         TimeClass1 tc1 = new TimeClass1(timerDel1);
         // объект секундомера
-
-
         timer1 = new Timer(timerStep, tc1);
 
         TimeClass2 tc2 = new TimeClass2(timerDel2);
@@ -144,11 +142,11 @@ class Main extends JFrame {
     }
 //----------------------------------------------------------------------
 
-    // клас имплементации события нажатия старт
+    // класс имплементации события нажатия старт
     class startEventListener implements ActionListener {
 
         @Override
-        // обработка события нажатия на button start отжимание  (работает)
+        // обработка события нажатия на button start отжимание
         public void actionPerformed(ActionEvent e) {
             input.setText("отжимание");
             // старт секундомера с повторением
@@ -204,7 +202,7 @@ class Main extends JFrame {
         @Override
         public void actionPerformed(ActionEvent ts) {
 
-            K = 30;// а один час
+            K = 30;// за один час
             k = K / 3600; // в одну секунду
             countero++; // секундомер текущий
             counter++; // обший
@@ -215,7 +213,7 @@ class Main extends JFrame {
             if (countero > 0) {
               // если время пошло, появляется надпись
                 // не забудем про формат времени и округление калорий до сотых
-                labelo.setText("овтжимание: время: " + LocalTime.ofSecondOfDay(countero) +  " калорий в час=" + df.format(calo));
+                labelo.setText("отжимание: время: " + LocalTime.ofSecondOfDay(countero) +  " затрат калорий " + df.format(calo));
             }
         }
     }
@@ -238,7 +236,7 @@ class Main extends JFrame {
             cal1 = counter1 * k;
             cals=counters*k;
             if (counters > 0) {
-                labels.setText("скакалка: время: " + LocalTime.ofSecondOfDay(counters) + " калорий в час=" + df.format(cals));
+                labels.setText("скакалка: время: " + LocalTime.ofSecondOfDay(counters) + " затрат калорий " + df.format(cals));
             }
         }
 
@@ -252,7 +250,7 @@ class Main extends JFrame {
             counter2 = count;
         }
 
-        // время пошло , не работает все время срабатывает следующий класс
+        // время пошло приседание
         @Override
         public void actionPerformed(ActionEvent ts) {
 
@@ -266,7 +264,7 @@ class Main extends JFrame {
             calp = counterp * k;
             if (counterp >= -1) {
 
-                labelp.setText("приседание: время: "+ LocalTime.ofSecondOfDay(counterp) + " калорий в час=" + df.format(calp));
+                labelp.setText("приседание: время: "+ LocalTime.ofSecondOfDay(counterp) + " затрат калорий " + df.format(calp));
             }
         }
 
@@ -288,10 +286,10 @@ class Main extends JFrame {
             calsymm = cal + cal2 +cal1;
             countersymm = counter1+counter2+counter; // фомулы для общего затрата
 
-            label1.setText("время потрачено на отжимание: " + LocalTime.ofSecondOfDay(counter) + " калорий в час=" + df.format(cal) );
-            label2.setText("время потрачено на скакалку: "+ LocalTime.ofSecondOfDay(counter1) +" калорий в час=" + df.format(cal1) );
-            label3.setText("время потрачено на приседание: "  + LocalTime.ofSecondOfDay(counter2) +  " калорий в час=" + df.format(cal2) );
-            label4.setText("общий затрат на тренировки" + LocalTime.ofSecondOfDay(countersymm) + " калорий в час=" + df.format(calsymm));
+            label1.setText("время потрачено на отжимание: " + LocalTime.ofSecondOfDay(counter) + " затрат калорий " + df.format(cal) );
+            label2.setText("время потрачено на скакалку: "+ LocalTime.ofSecondOfDay(counter1) +" затрат калорий " + df.format(cal1) );
+            label3.setText("время потрачено на приседание: "  + LocalTime.ofSecondOfDay(counter2) +  " затрат калорий " + df.format(cal2) );
+            label4.setText("общий затрат на тренировки" + LocalTime.ofSecondOfDay(countersymm) + " затрат калорий " + df.format(calsymm));
 
 
 
