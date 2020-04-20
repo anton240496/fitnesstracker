@@ -318,5 +318,6 @@ class Main extends JFrame {
 
         // визуализация формы
         graphic.setVisible(true);
+
     }
 }
