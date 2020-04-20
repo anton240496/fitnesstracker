@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
+import java.time.LocalTime;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -50,6 +52,7 @@ class Main extends JFrame {
     private JLabel label2 = new JLabel("таймер скакалка; ");
     private JLabel label3 = new JLabel("таймер приседание; ");
     private JLabel label4 = new JLabel("общий затрат;");
+    private DecimalFormat df = new DecimalFormat("#####.##");
 
     private Timer timer;
     private Timer timer1;
@@ -212,7 +215,7 @@ class Main extends JFrame {
 
 
             K = 30;
-            k = K;
+            k = K / 3600;
             countero++;
             counter++;
             calo++;
@@ -220,7 +223,10 @@ class Main extends JFrame {
             cal = counter * k;
             calo=countero*k;
             if (countero > 0) {
-                labelo.setText("время: " + countero +  "калорий в час=" + calo);
+                //   (LocalTime.ofSecondOfDay(86399))
+
+              ///  System.out.println(df.format(PI));
+                labelo.setText("время: " + LocalTime.ofSecondOfDay(countero) +  "калорий в час=" + df.format(calo));
             }
         }
     }
@@ -235,7 +241,7 @@ class Main extends JFrame {
         public void actionPerformed(ActionEvent ts1) {
 
             K = 100;
-            k = K ;
+            k = K / 3600;
             counters++;
             counter1++;
             cal1++;
@@ -243,7 +249,7 @@ class Main extends JFrame {
             cal1 = counter1 * k;
             cals=counters*k;
             if (counters > 0) {
-                labels.setText("время: " + counters + "калорий в час=" + cals);
+                labels.setText("время: " + LocalTime.ofSecondOfDay(counters) + "калорий в час=" + df.format(cals));
             }
         }
 
@@ -263,7 +269,7 @@ class Main extends JFrame {
 
 
             K = 200;
-            k = K ;
+            k = K / 3600;
             counter2++;
             counterp++;
             cal2++;
@@ -272,7 +278,7 @@ class Main extends JFrame {
             calp = counterp * k;
             if (counterp >= -1) {
 
-                labelp.setText("время: " + counterp +  "калорий в час=" + calp);
+                labelp.setText("время: "+ LocalTime.ofSecondOfDay(counterp) + "калорий в час=" + df.format(calp));
             }
         }
 
@@ -285,7 +291,8 @@ class Main extends JFrame {
         // обработка события нажатия на button start
         public void actionPerformed(ActionEvent e) {
 
-            float calsymm, countersymm;
+            float calsymm;
+            long countersymm;
 
 
             timer.stop();
@@ -300,18 +307,18 @@ class Main extends JFrame {
 
 
 
-            label1.setText(" время на отжимание: " + counter + "калорий в час=" + cal);
+            label1.setText(" время на отжимание: " + LocalTime.ofSecondOfDay(counter) + "калорий в час=" + df.format(cal));
 
 
 
 
-            label2.setText(" время на скакалку: " + counter1 + "калорий в час=" + cal1);
+            label2.setText(" время на скакалку: "+ LocalTime.ofSecondOfDay(counter1) +"калорий в час=" + df.format(cal1));
 
 
 
-            label3.setText(" время на приседание: " + counter2 + "калорий в час=" + cal2);
+            label3.setText(" время на приседание: "  + LocalTime.ofSecondOfDay(counter2) +  "калорий в час=" + df.format(cal2));
 
-            label4.setText(" общее время: " + countersymm + "калорий в час=" + calsymm);
+            label4.setText(" общее время: " + LocalTime.ofSecondOfDay(countersymm) + "калорий в час=" + df.format(calsymm));
 
 
             input.setText("секундомер остановлен");
