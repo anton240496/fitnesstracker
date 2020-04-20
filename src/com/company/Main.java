@@ -215,7 +215,7 @@ class Main extends JFrame {
             if (countero > 0) {
               // если время пошло, появляется надпись
                 // не забудем про формат времени и округление калорий до сотых
-                labelo.setText("время: " + LocalTime.ofSecondOfDay(countero) +  " калорий в час=" + df.format(calo));
+                labelo.setText("овтжимание: время: " + LocalTime.ofSecondOfDay(countero) +  " калорий в час=" + df.format(calo));
             }
         }
     }
@@ -238,7 +238,7 @@ class Main extends JFrame {
             cal1 = counter1 * k;
             cals=counters*k;
             if (counters > 0) {
-                labels.setText("время: " + LocalTime.ofSecondOfDay(counters) + " калорий в час=" + df.format(cals));
+                labels.setText("скакалка: время: " + LocalTime.ofSecondOfDay(counters) + " калорий в час=" + df.format(cals));
             }
         }
 
@@ -266,7 +266,7 @@ class Main extends JFrame {
             calp = counterp * k;
             if (counterp >= -1) {
 
-                labelp.setText("время: "+ LocalTime.ofSecondOfDay(counterp) + " калорий в час=" + df.format(calp));
+                labelp.setText("приседание: время: "+ LocalTime.ofSecondOfDay(counterp) + " калорий в час=" + df.format(calp));
             }
         }
 
