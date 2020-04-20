@@ -284,7 +284,7 @@ class Main extends JFrame {
             timer1.stop();
             timer2.stop(); // остановить все секундомеры
             calsymm = cal + cal2 +cal1;
-            countersymm = counter1+counter2+counter; // фомулы для общего затрата
+            countersymm = counter1+counter2+counter; // формулы для общего затрата
 
             label1.setText("время потрачено на отжимание: " + LocalTime.ofSecondOfDay(counter) + " затрат калорий " + df.format(cal) );
             label2.setText("время потрачено на скакалку: "+ LocalTime.ofSecondOfDay(counter1) +" затрат калорий " + df.format(cal1) );
@@ -301,8 +301,9 @@ class Main extends JFrame {
             calp=0;
             countero=0;
             counters=0;
-            counterp=0; // обнуление текущих секундомеров, чтобы можно было начать тренироку заново, при этом данные подолжают
-            // суммировваться, так как для общих данных предусмотрены другие без обнуления аналогичные переменные
+            counterp=0; // обнуление текущих секундомеров, чтобы можно было начать тренировку заново, при этом данные продолжают
+            // суммироваться, так как для общих данных предусмотрены другие без обнуления аналогичные переменные
+
 
         }
 
