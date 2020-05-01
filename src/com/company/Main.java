@@ -5,6 +5,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
 import java.text.DecimalFormat;
 import java.time.LocalTime;
 import javax.swing.JButton;
@@ -21,16 +22,18 @@ import javax.swing.border.TitledBorder;
 
 class Main extends JFrame {
 
-    private int counter, countero, counter1, counters, counter2, counterp; // время на разные виды трененеровок
+    private int countero, counters, counterp; // время на разные виды трененеровок
+
     // счетчик срабатываний секундомера
-    private int timerCount;
+  //  private int timerCount;
     // период срабатывания секундомером  для всех упражненй
     private int timerDel = 0;
     private int timerDel1 = 0;
     private int timerDel2 = 0;
     private float K;//калорие в  один час
-    private float cal, calo, cal1, cals, cal2, calp;//подсчет калорий
+    private float  calo,  cals, calp;//подсчет калорий
     private float k; // в одну секунду
+    private int timerStep = 1000;
 //----------------------------------------------------------------------
 // создание объектов
 
@@ -58,7 +61,7 @@ class Main extends JFrame {
 
 
     // конструктор
-    public Main() {
+    public Main() throws IOException {
 
         // инициализация компонентов
         initComponents();
@@ -66,7 +69,7 @@ class Main extends JFrame {
         TimeClass tc = new TimeClass(timerDel);
         // объект секундомера
         // период секундомера 1000мс = 1 сек
-        int timerStep = 1000;
+
         timer = new Timer(timerStep, tc);
 
         TimeClass1 tc1 = new TimeClass1(timerDel1);
@@ -80,7 +83,7 @@ class Main extends JFrame {
     }
 
     // метод инициализации компонентов формы
-    private void initComponents() {
+    private void initComponents() throws IOException {
 
         // положение на экране
         setBounds(15, 30, 500, 250);
@@ -151,7 +154,10 @@ class Main extends JFrame {
             input.setText("отжимание");
             // старт секундомера с повторением
             timer.start();
+///
             timer.setRepeats(true);
+
+            // остановка других секундомеров, если они включены
             // остановка других секундомеров, если они включены
             timer1.stop();
             timer2.stop();
@@ -163,14 +169,14 @@ class Main extends JFrame {
         @Override
         // обработка события нажатия на button start скакалка
         public void actionPerformed(ActionEvent e) {
+
             input.setText("скакалка");
             // старт секундомера с повторением
             timer1.start();
             timer1.setRepeats(true);
-            // остановка других секундомеров, если они включены
+
             timer.stop();
             timer2.stop();
-
         }
     }
 
@@ -183,6 +189,7 @@ class Main extends JFrame {
             // старт секундомера с повторением
             timer2.start();
             timer2.setRepeats(true);
+
             // остановка других секундомеров, если они включены
             timer1.stop();
             timer.stop();
@@ -195,7 +202,7 @@ class Main extends JFrame {
 
         // конструктор
         public TimeClass(int count) {
-            counter = count;
+            countero = count;
         }
 
         // время пошло , отжимание
@@ -205,10 +212,7 @@ class Main extends JFrame {
             K = 30;// за один час
             k = K / 3600; // в одну секунду
             countero++; // секундомер текущий
-            counter++; // обший
             calo++; // текущий подсчет
-            cal++; // общий подсчет
-            cal = counter * k;
             calo=countero*k;// формулы для подсчета
             if (countero > 0) {
               // если время пошло, появляется надпись
@@ -222,7 +226,7 @@ class Main extends JFrame {
     public class TimeClass1 implements ActionListener {
         // время пошло , скакалка
         public TimeClass1(int count) {
-            counter1 = count;
+            counters = count;
         }
         @Override
         public void actionPerformed(ActionEvent ts1) {
@@ -230,10 +234,7 @@ class Main extends JFrame {
             K = 100;
             k = K / 3600;
             counters++;
-            counter1++;
-            cal1++;
             cals++;
-            cal1 = counter1 * k;
             cals=counters*k;
             if (counters > 0) {
                 labels.setText("скакалка: время: " + LocalTime.ofSecondOfDay(counters) + " затрат калорий " + df.format(cals));
@@ -247,7 +248,7 @@ class Main extends JFrame {
 
         // конструктор
         public TimeClass2(int count) {
-            counter2 = count;
+            counterp = count;
         }
 
         // время пошло приседание
@@ -256,11 +257,8 @@ class Main extends JFrame {
 
             K = 200;
             k = K / 3600;
-            counter2++;
             counterp++;
-            cal2++;
             calp++;
-            cal2 = counter2 * k;
             calp = counterp * k;
             if (counterp >= -1) {
 
@@ -282,34 +280,151 @@ class Main extends JFrame {
 
             timer.stop();
             timer1.stop();
-            timer2.stop(); // остановить все секундомеры
-            calsymm = cal + cal2 +cal1;
-            countersymm = counter1+counter2+counter; // формулы для общего затрата
+            timer2.stop();
 
-            label1.setText("время потрачено на отжимание: " + LocalTime.ofSecondOfDay(counter) + " затрат калорий " + df.format(cal) );
-            label2.setText("время потрачено на скакалку: "+ LocalTime.ofSecondOfDay(counter1) +" затрат калорий " + df.format(cal1) );
-            label3.setText("время потрачено на приседание: "  + LocalTime.ofSecondOfDay(counter2) +  " затрат калорий " + df.format(cal2) );
-            label4.setText("общий затрат на тренировки" + LocalTime.ofSecondOfDay(countersymm) + " затрат калорий " + df.format(calsymm));
 
+////персистенция данных
+/////////////////////////////////////////////////////////
+            /// НЕБОЛЬШОЙ АЛГОРИТМ
+            ////c=0; ->c=30;
+            ///если нет ФАЙЛА (создать файл)с2=0; и label(c); c2=c
+            ////иначе читаем С2 =с2 и +с =30; LABEL ;
+            // ЗАПИСЫАЕМ С2
+            ///////////////////////////////////////////////////////////////
+            int counteroper = 0;// и так сделаем переменные
+            int countersper = 0;
+            int counterpper = 0;
+            float caloper = 0;
+            float calsper = 0;
+            float calpper = 0;
+            String fileName = "file.txt";
+            if (!(new File(fileName)).exists()) {
+                File file = new File("file.txt");
+                try {
+                    file.createNewFile();//если нет, создать файл
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+
+                FileOutputStream fout = null;
+                try {
+                    fout = new FileOutputStream("file.txt");
+                } catch (FileNotFoundException fileNotFoundException) {
+                    fileNotFoundException.printStackTrace();
+                }
+                ObjectOutputStream oot = null;
+                try {
+                    oot = new ObjectOutputStream(fout);
+                    oot.writeInt(counteroper);//запись всех переменных
+                    oot.writeInt(countersper);
+                    oot.writeInt(counterpper);
+                    oot.writeFloat(caloper);
+                    oot.writeFloat(calsper);
+                    oot.writeFloat(calpper);
+
+                    calsymm= calo+calp+cals;// реализуем сумму
+                    countersymm=countero+counterp+counters;
+
+                    label1.setText("время потрачено на отжимание: " + LocalTime.ofSecondOfDay(countero) + " затрат калорий " + df.format(calo) );
+
+            label2.setText("время потрачено на скакалку: "+ LocalTime.ofSecondOfDay(counters) +" затрат калорий " + df.format(cals) );
+
+            label3.setText("время потрачено на приседание: "  + LocalTime.ofSecondOfDay(counterp) +  " затрат калорий " + df.format(calp) );
+
+            label4.setText( "всего потраченного времени " + LocalTime.ofSecondOfDay(countersymm) + " потрачено калорий "
+                    + df.format(calsymm) );// выведем резульаты первой тренировки
+                    counteroper=countero;
+                    countersper=counters;
+                    counterpper=counterp;
+                    caloper=calo;
+                    calsper=cals;
+                    calpper=calp;//прираняем наши переменнные для запси в файл после if else
+
+                    // закрываем поток
+                    oot.close();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }else {
+
+                FileInputStream fin = null;
+                try {
+                    fin = new FileInputStream("file.txt");
+                } catch (FileNotFoundException fileNotFoundException) {
+                    fileNotFoundException.printStackTrace();
+                }
+                ObjectInputStream oit = null;
+                try {
+                    oit = new ObjectInputStream(fin);
+                    counteroper = oit.readInt();// иначе вытащем переменные для персистенции
+                    countersper = oit.readInt();
+                    counterpper = oit.readInt();
+                    caloper = oit.readFloat();
+                    calsper = oit.readFloat();
+                    calpper = oit.readFloat();
+
+                    counteroper = counteroper + countero;// сложем их с дааными за одну серию
+                    countersper = countersper + counters;
+                    counterpper = counterpper + counterp;
+                    caloper = caloper + calo;
+                    calsper = calsper + cals;
+                    calpper = calpper + calp;
+
+                    countersymm=counteroper+countersper+counterpper;
+                    calsymm=caloper+calsper+calpper;//незабываем про сумму
+
+                    label1.setText("время потрачено на отжимание: " + LocalTime.ofSecondOfDay(counteroper) + " затрат калорий " + df.format(caloper));
+                    label2.setText("время потрачено на отжимание: " + LocalTime.ofSecondOfDay(countersper) + " затрат калорий " + df.format(calsper));
+                    label3.setText("время потрачено на отжимание: " + LocalTime.ofSecondOfDay(counterpper) + " затрат калорий " + df.format(calpper));
+                    label4.setText("всего потраченного времени " + LocalTime.ofSecondOfDay(countersymm) + " потрачено калорий "
+                            + df.format(calsymm) );//вывод результатов
+
+                    oit.close();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }//выд=йдем из if  else и совершим запись, так мы запишем нужные данные вне зависимости от того
+            // какое из двух действий было совершенно программой
+
+            FileOutputStream fout = null;
+                try {
+                    fout = new FileOutputStream("file.txt");
+                } catch (FileNotFoundException fileNotFoundException) {
+                    fileNotFoundException.printStackTrace();
+                }
+                ObjectOutputStream oot = null;
+                try {
+                    oot = new ObjectOutputStream(fout);
+                    oot.writeInt(counteroper);
+                    oot.writeInt(countersper);
+                    oot.writeInt(counterpper);
+                    oot.writeFloat(caloper);
+                    oot.writeFloat(calsper);
+                    oot.writeFloat(calpper);
+
+
+                    // закрываем поток
+                    oot.close();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+//
 
 
             input.setText("тренировка закончена, выйдите или начните новую");
 
-            timerCount = 0;
+         //   timerCount = 0;
             calo=0;
             cals=0;
             calp=0;
             countero=0;
             counters=0;
-            counterp=0; // обнуление текущих секундомеров, чтобы можно было начать тренировку заново, при этом данные продолжают
-            // суммироваться, так как для общих данных предусмотрены другие без обнуления аналогичные переменные
-
+            counterp=0; // обнуление секундомеров за сессию
 
         }
-
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         // объект графической формы
         Main graphic = new Main();
