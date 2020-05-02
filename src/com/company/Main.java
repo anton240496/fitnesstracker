@@ -45,7 +45,8 @@ class Main extends JFrame {
     private JButton start = new JButton("Старт отжимание");
     private JButton start1 = new JButton("Старт скакалка");
     private JButton start2 = new JButton("Старт приседание");
-    private JButton stop = new JButton("Стоп");
+    private JButton stop = new JButton("Стоп, результаты");
+    private JButton nullr = new JButton("обнуление всех результатов");
     private JLabel labelo = new JLabel("");
     private JLabel labels = new JLabel("");
     private JLabel labelp = new JLabel("");
@@ -53,7 +54,8 @@ class Main extends JFrame {
     private JLabel label2 = new JLabel("");
     private JLabel label3 = new JLabel("");
     private JLabel label4 = new JLabel("");
-    private DecimalFormat df = new DecimalFormat("#####.##"); // округление калорий до сотых
+    private DecimalFormat df = new DecimalFormat("#####.##"); // округление калорий до
+    private String fileName = "file.txt"; // файл для персистенции
 
     private Timer timer;
     private Timer timer1;// секундомеры для трех кнопок
@@ -105,9 +107,15 @@ class Main extends JFrame {
         start2.addActionListener(new startEventListener2());
 
         // кнопка стоп
-        stop.setPreferredSize(new Dimension(100, 20));
+        stop.setPreferredSize(new Dimension(150, 20));
         // зарегистрировать экземпляр класса обработчика события stop
         stop.addActionListener(new stopEventListener());
+
+
+        //кнопка обнулить результаты
+        nullr.setPreferredSize(new Dimension(500, 20));
+        // зарегистрировать экземпляр класса обработчика события обнуление
+         nullr.addActionListener(new nullrEventListener());
 
         // панель 1
         panel1.add(BorderLayout.CENTER, scrollPaneInput);
@@ -136,6 +144,8 @@ class Main extends JFrame {
         panelob.add(label2);
         panelob.add(label3);
         panelob.add(label4);
+        panelob.add(nullr);
+
 
         // размещение панелей
         container.add(BorderLayout.CENTER, panel1);
@@ -193,6 +203,7 @@ class Main extends JFrame {
             // остановка других секундомеров, если они включены
             timer1.stop();
             timer.stop();
+
 
         }
     }
@@ -297,7 +308,7 @@ class Main extends JFrame {
             float caloper = 0;
             float calsper = 0;
             float calpper = 0;
-            String fileName = "file.txt";
+
             if (!(new File(fileName)).exists()) {
                 File file = new File("file.txt");
                 try {
@@ -374,8 +385,8 @@ class Main extends JFrame {
                     calsymm=caloper+calsper+calpper;//незабываем про сумму
 
                     label1.setText("время потрачено на отжимание: " + LocalTime.ofSecondOfDay(counteroper) + " затрат калорий " + df.format(caloper));
-                    label2.setText("время потрачено на отжимание: " + LocalTime.ofSecondOfDay(countersper) + " затрат калорий " + df.format(calsper));
-                    label3.setText("время потрачено на отжимание: " + LocalTime.ofSecondOfDay(counterpper) + " затрат калорий " + df.format(calpper));
+                    label2.setText("время потрачено на скакалку: " + LocalTime.ofSecondOfDay(countersper) + " затрат калорий " + df.format(calsper));
+                    label3.setText("время потрачено на приседание: " + LocalTime.ofSecondOfDay(counterpper) + " затрат калорий " + df.format(calpper));
                     label4.setText("всего потраченного времени " + LocalTime.ofSecondOfDay(countersymm) + " потрачено калорий "
                             + df.format(calsymm) );//вывод результатов
 
@@ -422,6 +433,23 @@ class Main extends JFrame {
             counterp=0; // обнуление секундомеров за сессию
 
         }
+    }
+
+    class nullrEventListener implements ActionListener{
+        @Override
+        // обработка события нажатия на кнопку обнуление
+        public void actionPerformed(ActionEvent tsn) {
+
+            if ((new File(fileName)).exists()) {
+                File file = new File("file.txt");
+                file.delete();//если есть удалить
+                            }
+            label1.setText("все результаты обнулены");
+            label2.setText("");
+            label3.setText("");
+            label4.setText("");
+        }
+
     }
 
     public static void main(String[] args) throws IOException {
